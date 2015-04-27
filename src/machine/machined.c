@@ -305,7 +305,7 @@ int manager_run(Manager *m) {
                         continue;
 
                 if (manager_gc(m, true))
-                       continue;
+			continue;
 
                 n = epoll_wait(m->epoll_fd, &event, 1, -1);
                 if (n < 0) {
