@@ -45,6 +45,6 @@ spec:
 	sed -e "s/^Source0:.*/Source0: $(SYSTEMD_TAR)/" $(ORIG_SPEC) > $(SPEC)
 
 systemd: sources spec
-	rpmbuild -D "_topdir $(RPMBUILD)" -bb $(SPEC)
+	rpmbuild -D "_topdir $(RPMBUILD)" -D "dist .el7_0" -bb $(SPEC)
 
 .PHONY: rpms
