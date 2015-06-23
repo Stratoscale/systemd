@@ -8,6 +8,9 @@ ORIG_SPEC = $(FRUSTRATO)/centos/SPECS/systemd.spec
 VERSION = $(shell grep "^Version:" $(ORIG_SPEC) | awk '{print $$2}')
 SPEC = $(FRUSTRATO)/build/SPECS/systemd.spec
 
+SYSTEMD_HASH = $(shell git rev-parse --short=12 HEAD)
+SYSTEMD_BUILDID = .strato.$(SYSTEMD_HASH)
+
 SYSTEMD_TAR = systemd-$(VERSION).tar.xz
 SOURCE0 = $(RPMBUILD)/SOURCES/$(SYSTEMD_TAR)
 
@@ -42,7 +45,8 @@ sources:
 
 spec:
 	mkdir -p $(dir $(SPEC))
-	sed -e "s/^Source0:.*/Source0: $(SYSTEMD_TAR)/" $(ORIG_SPEC) > $(SPEC)
+	sed -e "s/^Source0:.*/Source0: $(SYSTEMD_TAR)/" \
+	    -e "s/^Release.*/&$(SYSTEMD_BUILDID)/" $(ORIG_SPEC) > $(SPEC)
 
 systemd: sources spec
 	rpmbuild -D "_topdir $(RPMBUILD)" -D "dist .el7_0" -bb $(SPEC)
