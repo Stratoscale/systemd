@@ -29,12 +29,12 @@ prepareForCleanBuild:
 
 clean:
 	sudo rm -fr $(RPMBUILD)
-	make -C $(SYSTEMD) $@
+	-make -C $(SYSTEMD) $@
 
 distclean: clean
-	make -C $(SYSTEMD) $@
+	-make -C $(SYSTEMD) $@
 
-sources:
+sources: clean
 	mkdir -p $(RPMBUILD)/SOURCES
 	cp $(FRUSTRATO)/centos/SOURCES/* $(RPMBUILD)/SOURCES/
 	$(SYSTEMD)/autogen.sh
@@ -43,7 +43,7 @@ sources:
 	make -C $(SYSTEMD) dist-xz -j$(PARALLEL)
 	mv $(SYSTEMD)/$(SYSTEMD_TAR) $(SOURCE0)
 
-spec:
+spec: clean
 	mkdir -p $(dir $(SPEC))
 	sed -e "s/^Source0:.*/Source0: $(SYSTEMD_TAR)/" \
 	    -e "s/^Release.*/&$(SYSTEMD_BUILDID)/" $(ORIG_SPEC) > $(SPEC)
