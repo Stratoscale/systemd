@@ -178,3 +178,4 @@ config.log
 config.status
 configure
 stamp-*
+frustrato/build
