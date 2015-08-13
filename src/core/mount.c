@@ -1404,6 +1404,11 @@ static void mount_timer_event(Unit *u, uint64_t elapsed, Watch *w) {
         }
 }
 
+static inline bool mount_point_is_mancala(const char *where)
+{
+        return !strncmp(where, "/mnt/mancala", strlen("/mnt/mancala"));
+}
+
 static int mount_add_one(
                 Manager *m,
                 const char *what,
@@ -1428,6 +1433,9 @@ static int mount_add_one(
         /* Ignore API mount points. They should never be referenced in
          * dependencies ever. */
         if (mount_point_is_api(where) || mount_point_ignore(where))
+                return 0;
+
+        if (mount_point_is_mancala(where))
                 return 0;
 
         if (streq(fstype, "autofs"))
