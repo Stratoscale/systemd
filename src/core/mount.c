@@ -1393,6 +1393,11 @@ static int mount_dispatch_timer(sd_event_source *source, usec_t usec, void *user
         return 0;
 }
 
+static inline bool mount_point_is_mancala(const char *where)
+{
+        return !strncmp(where, "/mnt/mancala", strlen("/mnt/mancala"));
+}
+
 static int mount_setup_unit(
                 Manager *m,
                 const char *what,
@@ -1417,6 +1422,9 @@ static int mount_setup_unit(
         /* Ignore API mount points. They should never be referenced in
          * dependencies ever. */
         if (mount_point_is_api(where) || mount_point_ignore(where))
+                return 0;
+
+        if (mount_point_is_mancala(where))
                 return 0;
 
         if (streq(fstype, "autofs"))
