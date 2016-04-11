@@ -25,6 +25,7 @@ approve:
 	solvent approve --product=rpms
 
 prepareForCleanBuild:
+	sudo yum install $(CENTOS72_RPMS_TO_INSTALL_FOR_BUILD) --assumeyes --nogpgcheck
 	sudo yum-builddep --assumeyes $(ORIG_SPEC)
 
 clean:
@@ -52,3 +53,10 @@ systemd: sources spec
 	rpmbuild -D "_topdir $(RPMBUILD)" -D "dist .el7_0" -bb $(SPEC)
 
 .PHONY: rpms
+
+# we need kmod >= 15 to build systemd v219-19/
+CENTOS_7_2_MIRROR = http://yumcache.strato/mirrors/www/mirror/centos-7/7.2.1511
+CENTOS72_RPMS_TO_INSTALL_FOR_BUILD = \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/kmod-20-5.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/kmod-devel-20-5.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/kmod-libs-20-5.el7.x86_64.rpm \
