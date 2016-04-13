@@ -60,3 +60,10 @@ CENTOS72_RPMS_TO_INSTALL_FOR_BUILD = \
 	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/kmod-20-5.el7.x86_64.rpm \
 	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/kmod-devel-20-5.el7.x86_64.rpm \
 	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/kmod-libs-20-5.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libevdev-1.4.1-1.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libevdev-devel-1.4.1-1.el7.x86_64.rpm\
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libevdev-utils-1.4.1-1.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libdrm-2.4.60-3.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libdrm-devel-2.4.60-3.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libxkbfile-1.0.8-5.el7.x86_64.rpm \
+	$(CENTOS_7_2_MIRROR)/os/x86_64/Packages/libxkbfile-devel-1.0.8-5.el7.x86_64.rpm \
