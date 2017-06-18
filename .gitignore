@@ -277,3 +277,6 @@ config.log
 config.status
 configure
 stamp-*
+frustrato/build
+build
+test-install-root
