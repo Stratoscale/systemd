@@ -1,7 +1,10 @@
 all: rpms
 
+PARALLEL = $(shell grep -c processor /proc/cpuinfo)
+
 SYSTEMD_BASE_VERSION = systemd-219
 
+SYSTEMD = $(CURDIR)
 FRUSTRATO_BUILD = $(CURDIR)/frustrato/build
 RPMBUILD = $(CURDIR)/build
 SPEC = $(RPMBUILD)/SPECS/systemd.spec
@@ -15,14 +18,20 @@ SOURCE0 = $(RPMBUILD)/SOURCES/$(SYSTEMD_TAR)
 
 clean:
 	rm -rf $(RPMBUILD)
+	-make -C $(SYSTEMD) $@
 
 prepare_for_build: clean
 	@echo "Preparing build folders"
 	mkdir -p $(RPMBUILD)
 	cp -rf $(FRUSTRATO_BUILD)/* $(RPMBUILD)
-	git archive --format=tar.gz --prefix=$(SYSTEMD_BASE_VERSION)/ --output=$(SOURCE0) HEAD
+	$(SYSTEMD)/autogen.sh
+	$(SYSTEMD)/configure CFLAGS='-g -O0' --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib64 --enable-gtk-doc
+	make -C $(SYSTEMD) all -j$(PARALLEL)
+	make -C $(SYSTEMD) dist-xz -j$(PARALLEL)
+	mv $(SYSTEMD)/$(SYSTEMD_TAR) $(SOURCE0)
+	#git archive --format=tar.gz --prefix=$(SYSTEMD_BASE_VERSION)/ --output=$(SOURCE0) HEAD
 	@echo "Updating spec file release version"
-	sed -i -e "s/^Source0:.*/Source0: $(SYSTEMD_TAR)/" $(SPEC)
+	sed -i -e "s/^Source0:.*/Source0:        $(SYSTEMD_TAR)/" $(SPEC)
 	sed -i -e "s/^Release.*/&$(SYSTEMD_BUILDID)/" $(SPEC)
 
 rpms: prepare_for_build

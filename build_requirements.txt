@@ -1,3 +1,8 @@
+docbook-xsl
+xsltproc
+libtool
+automake
+autoconf
 libcap-devel
 tcp_wrappers-devel
 pam-devel
@@ -22,4 +27,5 @@ libmount-devel
 audit-libs-devel
 dbus-devel
 gnutls-devel
-
+gtkdocize
+sphinx

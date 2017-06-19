@@ -5,5 +5,8 @@ RUN  git config --global user.name "build"
 
 RUN yum install -y yum-plugin-ovl  # rpmdb checksum is invalid workaround
 
+RUN mkdir -p /usr/share/unifont
+COPY frustrato/unifont-5.1.20080808.hex /usr/share/unifont/unifont.hex
+
 COPY build_requirements.txt /tmp/build_requirements.txt
 RUN yum -y install $(cat /tmp/build_requirements.txt) && yum clean all
