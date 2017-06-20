@@ -27,6 +27,8 @@ approve:
 prepareForCleanBuild:
 	sudo yum install $(CENTOS72_RPMS_TO_INSTALL_FOR_BUILD) --assumeyes --nogpgcheck
 	sudo yum-builddep --assumeyes $(ORIG_SPEC)
+	mkdir -p /usr/share/unifont
+	cp frustrato/unifont-5.1.20080808.hex /usr/share/unifont/unifont.hex
 
 clean:
 	sudo rm -fr $(RPMBUILD)
