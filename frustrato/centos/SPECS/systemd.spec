@@ -7,7 +7,7 @@
 Name:           systemd
 Url:            http://www.freedesktop.org/wiki/Software/systemd
 Version:        219
-Release:        19%{?dist}
+Release:        30%{?dist}
 # For a breakdown of the licensing, see README
 License:        LGPLv2+ and MIT and GPLv2+
 Summary:        A System and Service Manager
@@ -26,6 +26,13 @@ Source4:        rc.local
 Source5:        60-alias-kmsg.rules
 # Stop-gap, just to ensure things work fine with rsyslog without having to change the package right-away
 Source6:        listen.conf
+Source7:        org.freedesktop.hostname1.policy
+Source8:        org.freedesktop.import1.policy
+Source9:        org.freedesktop.locale1.policy
+Source10:       org.freedesktop.login1.policy
+Source11:       org.freedesktop.machine1.policy
+Source12:       org.freedesktop.systemd1.policy
+Source13:       org.freedesktop.timedate1.policy
 
 # RHEL-specific
 Patch0001: 0001-kernel-install-add-fedora-specific-callouts-to-new-k.patch
@@ -285,6 +292,156 @@ Patch0254: 0254-selinux-fix-regression-of-systemctl-subcommands-when.patch
 Patch0255: 0255-tmpfiles.d-don-t-clean-SAP-lockfiles-and-logs.patch
 Patch0256: 0256-udev-make-naming-for-virtio-devices-opt-in.patch
 Patch0257: 0257-tmpfiles.d-don-t-clean-SAP-sockets-either.patch
+Patch0258: 0258-run-synchronously-wait-until-the-scope-unit-we-creat.patch
+Patch0259: 0259-device-rework-how-we-enter-tentative-state.patch
+Patch0260: 0260-core-Do-not-bind-a-mount-unit-to-a-device-if-it-was-.patch
+Patch0261: 0261-logind-set-RemoveIPC-no-by-default.patch
+Patch0262: 0262-sysv-generator-follow-symlinks-in-etc-rc.d-init.d.patch
+Patch0263: 0263-sysv-generator-test-always-log-to-console.patch
+Patch0264: 0264-man-RemoveIPC-is-set-to-no-on-rhel.patch
+Patch0265: 0265-Avoid-tmp-being-mounted-as-tmpfs-without-the-user-s-.patch
+Patch0266: 0266-test-sysv-generator-Check-for-network-online.target.patch
+Patch0267: 0267-makefile-disable-udev-tests.patch
+Patch0268: 0268-arm-aarch64-detect-virt-check-dmi.patch
+Patch0269: 0269-detect-virt-dmi-look-for-KVM.patch
+Patch0270: 0270-Revert-journald-turn-ForwardToSyslog-off-by-default.patch
+Patch0271: 0271-terminal-util-when-resetting-terminals-don-t-wait-fo.patch
+Patch0272: 0272-basic-terminal-util-introduce-SYSTEMD_COLORS-environ.patch
+Patch0273: 0273-ask-password-don-t-abort-when-message-is-missing.patch
+Patch0274: 0274-sysv-generator-do-not-join-dependencies-on-one-line-.patch
+Patch0275: 0275-udev-fibre-channel-fix-NPIV-support.patch
+Patch0276: 0276-ata_id-unreverse-WWN-identifier.patch
+Patch0277: 0277-Fixup-WWN-bytes-for-big-endian-systems.patch
+Patch0278: 0278-sd-journal-introduce-has_runtime_files-and-has_persi.patch
+Patch0279: 0279-journalctl-improve-error-messages-when-the-specified.patch
+Patch0280: 0280-journalctl-show-friendly-info-when-using-b-on-runtim.patch
+Patch0281: 0281-journalctl-make-journalctl-dev-sda-work.patch
+Patch0282: 0282-journalctl-add-match-for-the-current-boot-when-calle.patch
+Patch0283: 0283-man-clarify-what-happens-when-journalctl-is-called-w.patch
+Patch0284: 0284-core-downgrade-warning-about-duplicate-device-names.patch
+Patch0285: 0285-udev-downgrade-a-few-warnings-to-debug-messages.patch
+Patch0286: 0286-man-LEVEL-in-systemd-analyze-set-log-level-is-not-op.patch
+Patch0287: 0287-Revert-udev-fibre-channel-fix-NPIV-support.patch
+Patch0288: 0288-udev-path-id-fibre-channel-NPIV-use-fc_vport-s-port_.patch
+Patch0289: 0289-systemctl-is-active-failed-should-return-0-if-at-lea.patch
+Patch0290: 0290-rules-set-SYSTEMD_READY-0-on-DM_UDEV_DISABLE_OTHER_R.patch
+Patch0291: 0291-s390-add-personality-support.patch
+Patch0292: 0292-socket_address_listen-do-not-rely-on-errno.patch
+Patch0293: 0293-path_id-reintroduce-by-path-links-for-virtio-block-d.patch
+Patch0294: 0294-journal-fix-error-handling-when-compressing-journal-.patch
+Patch0295: 0295-journal-irrelevant-coding-style-fixes.patch
+Patch0296: 0296-install-follow-unit-file-symlinks-in-usr-but-not-etc.patch
+Patch0297: 0297-core-look-for-instance-when-processing-template-name.patch
+Patch0298: 0298-core-improve-error-message-when-starting-template-wi.patch
+Patch0299: 0299-man-tmpfiles.d-add-note-about-permissions-and-owners.patch
+Patch0300: 0300-tmpfiles-don-t-follow-symlinks-when-adjusting-ACLs-f.patch
+Patch0301: 0301-udev-filter-out-non-sensically-high-onboard-indexes-.patch
+Patch0302: 0302-test-execute-add-tests-for-RuntimeDirectory.patch
+Patch0303: 0303-core-fix-group-ownership-when-Group-is-set.patch
+Patch0304: 0304-fstab-generator-cescape-device-name-in-root-fsck-ser.patch
+Patch0305: 0305-core-add-new-RandomSec-setting-for-time-units.patch
+Patch0306: 0306-core-rename-Random-to-RandomizedDelay.patch
+Patch0307: 0307-journal-remote-change-owner-of-var-log-journal-remot.patch
+Patch0308: 0308-Add-Seal-option-in-the-configuration-file-for-journa.patch
+Patch0309: 0309-tests-fix-make-check-failure.patch
+Patch0310: 0310-device-make-sure-to-not-ignore-re-plugged-device.patch
+Patch0311: 0311-device-Ensure-we-have-sysfs-path-before-comparing.patch
+Patch0312: 0312-core-fix-memory-leak-on-set-default-enable-disable-e.patch
+Patch0313: 0313-nspawn-fix-minor-memory-leak.patch
+Patch0314: 0314-basic-fix-error-memleak-in-socket-util.patch
+Patch0315: 0315-core-fix-memory-leak-in-manager_run_generators.patch
+Patch0316: 0316-modules-load-fix-memory-leak.patch
+Patch0317: 0317-core-fix-memory-leak-on-failed-preset-all.patch
+Patch0318: 0318-sd-bus-fix-memory-leak-in-test-bus-chat.patch
+Patch0319: 0319-core-fix-memory-leak-in-transient-units.patch
+Patch0320: 0320-bus-fix-leak-in-error-path.patch
+Patch0321: 0321-shared-logs-show-fix-memleak-in-add_matches_for_unit.patch
+Patch0322: 0322-logind-introduce-LockedHint-and-SetLockedHint-3238.patch
+Patch0323: 0323-import-use-the-old-curl-api.patch
+Patch0324: 0324-importd-drop-dkr-support.patch
+Patch0325: 0325-import-add-support-for-gpg2-for-verifying-imported-i.patch
+Patch0326: 0326-nspawn-when-connected-to-pipes-for-stdin-stdout-pass.patch
+Patch0327: 0327-mount-remove-obsolete-n.patch
+Patch0328: 0328-core-don-t-log-job-status-message-in-case-job-was-ef.patch
+Patch0329: 0329-core-use-an-AF_UNIX-SOCK_DGRAM-socket-for-cgroup-age.patch
+Patch0330: 0330-logind-process-session-inhibitor-fds-at-higher-prior.patch
+Patch0331: 0331-Teach-bus_append_unit_property_assignment-about-Dele.patch
+Patch0332: 0332-sd-netlink-fix-deep-recursion-in-message-destruction.patch
+Patch0333: 0333-add-REMOTE_ADDR-and-REMOTE_PORT-for-Accept-yes.patch
+Patch0334: 0334-core-don-t-dispatch-load-queue-when-setting-Slice-fo.patch
+Patch0335: 0335-run-make-slice-work-in-conjunction-with-scope.patch
+Patch0336: 0336-myhostname-fix-timeout-if-ipv6-is-disabled.patch
+Patch0337: 0337-readahead-do-not-increase-nr_requests-for-root-fs-bl.patch
+Patch0338: 0338-manager-reduce-complexity-of-unit_gc_sweep-3507.patch
+Patch0339: 0339-hwdb-selinuxify-a-bit-3460.patch
+Patch0340: 0340-udevadm-explicitly-relabel-etc-udev-hwdb.bin-after-r.patch
+Patch0341: 0341-systemctl-return-diffrent-error-code-if-service-exis.patch
+Patch0342: 0342-systemctl-Replace-init-script-error-codes-with-enum-.patch
+Patch0343: 0343-systemctl-rework-systemctl-status-a-bit.patch
+Patch0344: 0344-journal-verify-don-t-hit-SIGFPE-when-determining-pro.patch
+Patch0345: 0345-journal-avoid-mapping-empty-data-and-field-hash-tabl.patch
+Patch0346: 0346-journal-when-verifying-journal-files-handle-empty-on.patch
+Patch0347: 0347-journal-explain-the-error-when-we-find-a-non-DATA-ob.patch
+Patch0348: 0348-journalctl-properly-detect-empty-journal-files.patch
+Patch0349: 0349-journal-uppercase-first-character-in-verify-error-me.patch
+Patch0350: 0350-journalctl-make-sure-journalctl-f-t-unmatched-blocks.patch
+Patch0351: 0351-journalctl-don-t-print-No-entries-in-quiet-mode.patch
+Patch0352: 0352-sd-event-expose-the-event-loop-iteration-counter-via.patch
+Patch0353: 0353-manager-Only-invoke-a-single-sigchld-per-unit-within.patch
+Patch0354: 0354-manager-Fixing-a-debug-printf-formatting-mistake.patch
+Patch0355: 0355-core-support-IEC-suffixes-for-RLIMIT-stuff.patch
+Patch0356: 0356-core-accept-time-units-for-time-based-resource-limit.patch
+Patch0357: 0357-time-util-add-parse_time-which-is-like-parse_sec-but.patch
+Patch0358: 0358-core-support-soft-hard-ranges-for-RLIMIT-options.patch
+Patch0359: 0359-core-fix-rlimit-parsing.patch
+Patch0360: 0360-core-dump-rlim_cur-too.patch
+Patch0361: 0361-install-fix-disable-via-unit-file-path.patch
+Patch0362: 0362-manager-don-t-skip-sigchld-handler-for-main-and-cont.patch
+Patch0363: 0363-units-increase-watchdog-timeout-to-3min-for-all-our-.patch
+Patch0364: 0364-core-bump-net.unix.max_dgram_qlen-really-early-durin.patch
+Patch0365: 0365-core-fix-priority-ordering-in-notify-handling.patch
+Patch0366: 0366-tests-fix-personality-tests-on-ppc64-and-aarch64.patch
+Patch0367: 0367-systemctl-consider-service-running-only-when-it-is-i.patch
+Patch0368: 0368-install-do-not-crash-when-processing-empty-masked-un.patch
+Patch0369: 0369-Revert-install-fix-disable-via-unit-file-path.patch
+Patch0370: 0370-systemctl-allow-disable-on-the-unit-file-path-but-wa.patch
+Patch0371: 0371-tmpfiles-enforce-ordering-when-executing-lines.patch
+Patch0372: 0372-Introduce-bus_unit_check_load_state-helper.patch
+Patch0373: 0373-core-use-bus_unit_check_load_state-in-transaction_ad.patch
+Patch0374: 0374-udev-path_id-correct-segmentation-fault-due-to-missi.patch
+Patch0375: 0375-rules-load-sg-driver-also-when-scsi_target-appears-4.patch
+Patch0376: 0376-fix-gcc-warnings-about-uninitialized-variables.patch
+Patch0377: 0377-journalctl-rework-code-that-checks-whether-we-have-a.patch
+Patch0378: 0378-journalctl-Improve-boot-ID-lookup.patch
+Patch0379: 0379-journalctl-only-have-a-single-exit-path-from-main.patch
+Patch0380: 0380-journalctl-free-all-command-line-argument-objects.patch
+Patch0381: 0381-journalctl-rename-boot_id_t-to-BootId.patch
+Patch0382: 0382-util-introduce-CMSG_FOREACH-macro-and-make-use-of-it.patch
+Patch0383: 0383-journald-don-t-employ-inner-loop-for-reading-from-in.patch
+Patch0384: 0384-journald-fix-count-of-object-meta-fields.patch
+Patch0385: 0385-journal-cat-return-a-correct-error-not-1.patch
+Patch0386: 0386-journalctl-introduce-short-options-for-since-and-unt.patch
+Patch0387: 0387-journal-s-Envalid-Invalid.patch
+Patch0388: 0388-journald-dispatch-SIGTERM-SIGINT-with-a-low-priority.patch
+Patch0389: 0389-lz4-fix-size-check-which-had-no-chance-of-working-on.patch
+Patch0390: 0390-journal-normalize-priority-of-logging-sources.patch
+Patch0391: 0391-Fix-miscalculated-buffer-size-and-uses-of-size-unlim.patch
+Patch0392: 0392-journal-Drop-monotonicity-check-when-appending-to-jo.patch
+Patch0393: 0393-journalctl-unify-how-we-free-boot-id-lists-a-bit.patch
+Patch0394: 0394-journalctl-don-t-trust-the-per-field-entry-tables-wh.patch
+Patch0395: 0395-units-remove-udev-control-socket-when-systemd-stops-.patch
+Patch0396: 0396-logind-don-t-assert-if-the-slice-is-missing.patch
+Patch0397: 0397-core-enable-transient-unit-support-for-slice-units.patch
+Patch0398: 0398-sd-bus-bump-message-queue-size.patch
+Patch0399: 0399-install-fix-disable-when-etc-systemd-system-is-a-sym.patch
+Patch0400: 0400-rules-add-NVMe-rules-3136.patch
+Patch0401: 0401-rules-introduce-disk-by-id-model_serial-symlinks-for.patch
+Patch0402: 0402-rules-fix-for-possible-whitespace-in-the-model-attri.patch
+Patch0403: 0403-systemctl-pid1-do-not-warn-about-missing-install-inf.patch
+Patch0404: 0404-systemctl-core-ignore-masked-units-in-preset-all.patch
+Patch0405: 0405-shared-install-handle-dangling-aliases-as-an-explici.patch
+Patch0406: 0406-shared-install-ignore-unit-symlinks-when-doing-prese.patch
+Patch0407: 0407-40-redhat.rules-don-t-hoplug-memory-on-s390x.patch
 
 
 %global num_patches %{lua: c=0; for i,p in ipairs(patches) do c=c+1; end; print(c);}
@@ -302,6 +459,8 @@ BuildRequires:  glib2-devel
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  libblkid-devel
 BuildRequires:  xz-devel
+BuildRequires:  zlib-devel
+BuildRequires:  bzip2-devel
 BuildRequires:  libidn-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  kmod-devel
@@ -387,6 +546,7 @@ License:        LGPLv2+ and MIT
 Requires:       %{name} = %{version}-%{release}
 Provides:       libudev-devel = %{version}
 Obsoletes:      libudev-devel < 183
+Requires:       %{name}-libs = %{version}-%{release}
 
 %description devel
 Development headers and auxiliary files for developing applications for systemd.
@@ -403,6 +563,7 @@ SysV compatibility tools for systemd
 Summary:        Python 2 bindings for systemd
 License:        LGPLv2+
 Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}-libs = %{version}-%{release}
 
 %description python
 This package contains bindings which allow Python 2 programs to use
@@ -413,6 +574,7 @@ Summary:        Libraries for adding libudev support to applications that use gl
 Conflicts:      filesystem < 3
 License:        LGPLv2+
 Requires:       %{name}-libs = %{version}-%{release}
+Requires:       glib2 >= 2.42
 
 %description -n libgudev1
 This package contains the libraries that make it easier to use libudev
@@ -527,16 +689,17 @@ CONFIGURE_OPTS=(
 --disable-timesyncd
 --disable-kdbus
 --disable-terminal
---disable-importd
 --enable-gtk-doc
 --enable-compat-libs
 --disable-sysusers
+--disable-ldconfig
 %ifarch s390 s390x ppc %{power64} aarch64
 --disable-lto
 %endif
 )
 
 
+RPM_OPT_FLAGS="$RPM_OPT_FLAGS -O0"
 %configure "${CONFIGURE_OPTS[@]}"
 make %{?_smp_mflags} GCC_COLORS="" V=1
 
@@ -545,6 +708,15 @@ make %{?_smp_mflags} GCC_COLORS="" V=1
 
 find %{buildroot} \( -name '*.a' -o -name '*.la' \) -delete
 sed -i 's/L+/#/' %{buildroot}/usr/lib/tmpfiles.d/etc.conf
+
+rm -f %{buildroot}%{_datadir}/polkit-1/actions/org.freedesktop.*.policy
+install -m 0644 %{SOURCE7} %{buildroot}%{_datadir}/polkit-1/actions/
+install -m 0644 %{SOURCE8} %{buildroot}%{_datadir}/polkit-1/actions/
+install -m 0644 %{SOURCE9} %{buildroot}%{_datadir}/polkit-1/actions/
+install -m 0644 %{SOURCE10} %{buildroot}%{_datadir}/polkit-1/actions/
+install -m 0644 %{SOURCE11} %{buildroot}%{_datadir}/polkit-1/actions/
+install -m 0644 %{SOURCE12} %{buildroot}%{_datadir}/polkit-1/actions/
+install -m 0644 %{SOURCE13} %{buildroot}%{_datadir}/polkit-1/actions/
 
 # udev links
 mkdir -p %{buildroot}/%{_sbindir}
@@ -689,8 +861,8 @@ getent group floppy >/dev/null 2>&1 || groupadd -r -g 19 floppy >/dev/null 2>&1 
 getent group systemd-journal >/dev/null 2>&1 || groupadd -r -g 190 systemd-journal 2>&1 || :
 getent group systemd-bus-proxy >/dev/null 2>&1 || groupadd -r systemd-bus-proxy 2>&1 || :
 getent passwd systemd-bus-proxy >/dev/null 2>&1 || useradd -r -l -g systemd-bus-proxy -d / -s /sbin/nologin -c "systemd Bus Proxy" systemd-bus-proxy >/dev/null 2>&1 || :
-getent group systemd-network >/dev/null 2>&1 || groupadd -r systemd-network 2>&1 || :
-getent passwd systemd-network >/dev/null 2>&1 || useradd -r -l -g systemd-network -d / -s /sbin/nologin -c "systemd Network Management" systemd-network >/dev/null 2>&1 || :
+getent group systemd-network >/dev/null 2>&1 || groupadd -r -g 192 systemd-network 2>&1 || :
+getent passwd systemd-network >/dev/null 2>&1 || useradd -r -u 192 -l -g systemd-network -d / -s /sbin/nologin -c "systemd Network Management" systemd-network >/dev/null 2>&1 || :
 
 systemctl stop systemd-udevd-control.socket systemd-udevd-kernel.socket systemd-udevd.service >/dev/null 2>&1 || :
 
@@ -900,8 +1072,9 @@ getent group systemd-journal-gateway >/dev/null 2>&1 || groupadd -r -g 191 syste
 getent passwd systemd-journal-gateway >/dev/null 2>&1 || useradd -r -l -u 191 -g systemd-journal-gateway -d %{_localstatedir}/log/journal -s /sbin/nologin -c "Journal Gateway" systemd-journal-gateway >/dev/null 2>&1 || :
 getent group systemd-journal-remote >/dev/null 2>&1 || groupadd -r systemd-journal-remote 2>&1 || :
 getent passwd systemd-journal-remote >/dev/null 2>&1 || useradd -r -l -g systemd-journal-remote -d /%{_localstatedir}/log/journal/remote -s /sbin/nologin -c "Journal Remote" systemd-journal-remote >/dev/null 2>&1 || :
+getent group systemd-journal >/dev/null 2>&1 || groupadd -r -g 190 systemd-journal 2>&1 || :
 getent group systemd-journal-upload >/dev/null 2>&1 || groupadd -r systemd-journal-upload 2>&1 || :
-getent passwd systemd-journal-upload >/dev/null 2>&1 || useradd -r -l -g systemd-journal-upload -d /%{_localstatedir}/log/journal/upload -s /sbin/nologin -c "Journal Upload" systemd-journal-upload >/dev/null 2>&1 || :
+getent passwd systemd-journal-upload >/dev/null 2>&1 || useradd -r -l -g systemd-journal-upload -G systemd-journal -d /%{_localstatedir}/log/journal/upload -s /sbin/nologin -c "Journal Upload" systemd-journal-upload >/dev/null 2>&1 || :
 
 %post journal-gateway
 %systemd_post systemd-journal-gatewayd.socket systemd-journal-gatewayd.service
@@ -928,8 +1101,8 @@ getent passwd systemd-journal-upload >/dev/null 2>&1 || useradd -r -l -g systemd
 %systemd_postun_with_restart systemd-networkd.service systemd-networkd-wait-online.service
 
 %pre resolved
-getent group systemd-resolve >/dev/null 2>&1 || groupadd -r systemd-resolve 2>&1 || :
-getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -l -g systemd-resolve -d / -s /sbin/nologin -c "systemd Resolver" systemd-resolve >/dev/null 2>&1 || :
+getent group systemd-resolve >/dev/null 2>&1 || groupadd -r -g 193 systemd-resolve 2>&1 || :
+getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -u 193 -l -g systemd-resolve -d / -s /sbin/nologin -c "systemd Resolver" systemd-resolve >/dev/null 2>&1 || :
 
 %post resolved
 %systemd_post systemd-resolved.service
@@ -991,6 +1164,7 @@ getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -l -g systemd-resolv
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.freedesktop.locale1.conf
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.freedesktop.timedate1.conf
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.freedesktop.machine1.conf
+%config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.freedesktop.import1.conf
 %config(noreplace) %{_sysconfdir}/systemd/system.conf
 %config(noreplace) %{_sysconfdir}/systemd/user.conf
 %config(noreplace) %{_sysconfdir}/systemd/logind.conf
@@ -1065,6 +1239,7 @@ getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -l -g systemd-resolv
 %exclude %{_prefix}/lib/systemd/systemd-resolve-host
 %exclude %{_prefix}/lib/systemd/systemd-journal-upload
 %{_prefix}/lib/systemd/systemd-*
+%{_prefix}/lib/systemd/import-pubring.gpg
 %{_prefix}/lib/udev
 %exclude  %{_sysconfdir}/udev/rules.d/80-net-setup-link.rules
 %{_prefix}/lib/tmpfiles.d/systemd.conf
@@ -1114,6 +1289,7 @@ getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -l -g systemd-resolv
 %{_datadir}/dbus-1/system-services/org.freedesktop.locale1.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.timedate1.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.machine1.service
+%{_datadir}/dbus-1/system-services/org.freedesktop.import1.service
 %dir %{_datadir}/polkit-1
 %dir %{_datadir}/polkit-1/actions
 %{_datadir}/polkit-1/actions/org.freedesktop.systemd1.policy
@@ -1122,6 +1298,7 @@ getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -l -g systemd-resolv
 %{_datadir}/polkit-1/actions/org.freedesktop.locale1.policy
 %{_datadir}/polkit-1/actions/org.freedesktop.timedate1.policy
 %{_datadir}/polkit-1/actions/org.freedesktop.machine1.policy
+%{_datadir}/polkit-1/actions/org.freedesktop.import1.policy
 %{_libdir}/pkgconfig/systemd.pc
 %{_datadir}/pkgconfig/udev.pc
 %{_datadir}/bash-completion/completions/*
@@ -1243,6 +1420,175 @@ getent passwd systemd-resolve >/dev/null 2>&1 || useradd -r -l -g systemd-resolv
 %{_mandir}/man8/systemd-resolved.*
 
 %changelog
+* Tue Sep 13 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-30
+- systemctl,pid1: do not warn about missing install info with "preset" (#1373950)
+- systemctl/core: ignore masked units in preset-all (#1375097)
+- shared/install: handle dangling aliases as an explicit case, report nicely (#1375097)
+- shared/install: ignore unit symlinks when doing preset-all (#1375097)
+- 40-redhat.rules: don't hoplug memory on s390x (#1370161)
+
+* Mon Sep 05 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-29
+- fix gcc warnings about uninitialized variables (#1318994)
+- journalctl: rework code that checks whether we have access to /var/log/journal (#1318994)
+- journalctl: Improve boot ID lookup (#1318994)
+- journalctl: only have a single exit path from main() (#1318994)
+- journalctl: free all command line argument objects (#1318994)
+- journalctl: rename boot_id_t to BootId (#1318994)
+- util: introduce CMSG_FOREACH() macro and make use of it everywhere (#1318994)
+- journald: don't employ inner loop for reading from incoming sockets (#1318994)
+- journald: fix count of object meta fields (#1318994)
+- journal-cat: return a correct error, not -1 (#1318994)
+- journalctl: introduce short options for --since and --until (#1318994)
+- journal: s/Envalid/Invalid/ (#1318994)
+- journald: dispatch SIGTERM/SIGINT with a low priority (#1318994)
+- lz4: fix size check which had no chance of working on big-endian (#1318994)
+- journal: normalize priority of logging sources (#1318994)
+- Fix miscalculated buffer size and uses of size-unlimited sprintf() function. (#1318994)
+- journal: Drop monotonicity check when appending to journal file (#1318994)
+- journalctl: unify how we free boot id lists a bit (#1318994)
+- journalctl: don't trust the per-field entry tables when looking for boot IDs (#1318994)
+- units: remove udev control socket when systemd stops the socket unit (#49) (#1370133)
+- logind: don't assert if the slice is missing (#1371437)
+- core: enable transient unit support for slice units (#1370299)
+- sd-bus: bump message queue size (#1371205)
+- install: fix disable when /etc/systemd/system is a symlink (#1285996)
+- rules: add NVMe rules (#3136) (#1274651)
+- rules: introduce disk/by-id (model_serial) symlinks for NVMe drives (#3974) (#1274651)
+- rules: fix for possible whitespace in the "model" attribute (#1274651)
+
+* Fri Aug 19 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-27
+- tmpfiles: enforce ordering when executing lines (#1365870)
+- Introduce bus_unit_check_load_state() helper (#1256858)
+- core: use bus_unit_check_load_state() in transaction_add_job_and_dependencies() (#1256858)
+- udev/path_id: correct segmentation fault due to missing NULL check (#1365556)
+- rules: load sg driver also when scsi_target appears (#45) (#1322773)
+
+* Tue Aug 09 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-26
+- install: do not crash when processing empty (masked) unit file (#1159308)
+- Revert "install: fix disable via unit file path" (#1348208)
+- systemctl: allow disable on the unit file path, but warn about it (#3806) (#1348208)
+
+* Thu Aug 04 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-25
+- units: increase watchdog timeout to 3min for all our services (#1267707)
+- core: bump net.unix.max_dgram_qlen really early during boot (#1267707)
+- core: fix priority ordering in notify-handling (#1267707)
+- tests: fix personality tests on ppc64 and aarch64 (#1361049)
+- systemctl: consider service running only when it is in active or reloading state (#3874) (#1362461)
+
+* Mon Jul 18 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-24
+- manager: don't skip sigchld handler for main and control pid for services (#3738) (#1342173)
+
+* Tue Jul 12 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-23
+- udevadm: explicitly relabel /etc/udev/hwdb.bin after rename (#1350756)
+- systemctl: return diffrent error code if service exist or not (#3385) (#1047466)
+- systemctl: Replace init script error codes with enum (#3400) (#1047466)
+- systemctl: rework "systemctl status" a bit (#1047466)
+- journal-verify: don't hit SIGFPE when determining progress (#1350232)
+- journal: avoid mapping empty data and field hash tables (#1350232)
+- journal: when verifying journal files, handle empty ones nicely (#1350232)
+- journal: explain the error when we find a non-DATA object that is compressed (#1350232)
+- journalctl: properly detect empty journal files (#1350232)
+- journal: uppercase first character in verify error messages (#1350232)
+- journalctl: make sure 'journalctl -f -t unmatched' blocks (#1350232)
+- journalctl: don't print -- No entries -- in quiet mode (#1350232)
+- sd-event: expose the event loop iteration counter via sd_event_get_iteration() (#1342173)
+- manager: Only invoke a single sigchld per unit within a cleanup cycle (#1342173)
+- manager: Fixing a debug printf formatting mistake (#1342173)
+- core: support IEC suffixes for RLIMIT stuff (#1351415)
+- core: accept time units for time-based resource limits (#1351415)
+- time-util: add parse_time(), which is like parse_sec() but allows specification of default time unit if none is specified (#1351415)
+- core: support <soft:hard> ranges for RLIMIT options (#1351415)
+- core: fix rlimit parsing (#1351415)
+- core: dump rlim_cur too (#1351415)
+- install: fix disable via unit file path (#1348208)
+
+* Wed Jun 22 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-22
+- nspawn: when connected to pipes for stdin/stdout, pass them as-is to PID 1 (#1307080)
+- mount: remove obsolete -n (#1339721)
+- core: don't log job status message in case job was effectively NOP (#3199) (#1280014)
+- core: use an AF_UNIX/SOCK_DGRAM socket for cgroup agent notification (#1305608)
+- logind: process session/inhibitor fds at higher priority (#1305608)
+- Teach bus_append_unit_property_assignment() about 'Delegate' property (#1337922)
+- sd-netlink: fix deep recursion in message destruction (#1330593)
+- add REMOTE_ADDR and REMOTE_PORT for Accept=yes (#1341154)
+- core: don't dispatch load queue when setting Slice= for transient units (#1343904)
+- run: make --slice= work in conjunction with --scope (#1343904)
+- myhostname: fix timeout if ipv6 is disabled (#1330973)
+- readahead: do not increase nr_requests for root fs block device (#1314559)
+- manager: reduce complexity of unit_gc_sweep (#3507) (#1344556)
+- hwdb: selinuxify a bit (#3460) (#1343648)
+
+* Mon May 23 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-21
+- path_id: reintroduce by-path links for virtio block devices (#952567)
+- journal: fix error handling when compressing journal objects (#1292447)
+- journal: irrelevant coding style fixes (#1292447)
+- install: follow unit file symlinks in /usr, but not /etc when looking for [Install] data (#1159308)
+- core: look for instance when processing template name (#1159308)
+- core: improve error message when starting template without instance (#1142369)
+- man/tmpfiles.d: add note about permissions and ownership of symlinks (#1296288)
+- tmpfiles: don't follow symlinks when adjusting ACLs, fille attributes, access modes or ownership (#1296288)
+- udev: filter out non-sensically high onboard indexes reported by the kernel (#1230210)
+- test-execute: add tests for RuntimeDirectory (#1324826)
+- core: fix group ownership when Group is set (#1324826)
+- fstab-generator: cescape device name in root-fsck service (#1306126)
+- core: add new RandomSec= setting for time units (#1305279)
+- core: rename Random* to RandomizedDelay* (#1305279)
+- journal-remote: change owner of /var/log/journal/remote and create /var/lib/systemd/journal-upload (#1327303)
+- Add Seal option in the configuration file for journald-remote (#1329233)
+- tests: fix make check failure (#1159308)
+- device: make sure to not ignore re-plugged device (#1332606)
+- device: Ensure we have sysfs path before comparing. (#1332606)
+- core: fix memory leak on set-default, enable, disable etc (#1331667)
+- nspawn: fix minor memory leak (#1331667)
+- basic: fix error/memleak in socket-util (#1331667)
+- core: fix memory leak in manager_run_generators() (#1331667)
+- modules-load: fix memory leak (#1331667)
+- core: fix memory leak on failed preset-all (#1331667)
+- sd-bus: fix memory leak in test-bus-chat (#1331667)
+- core: fix memory leak in transient units (#1331667)
+- bus: fix leak in error path (#1331667)
+- shared/logs-show: fix memleak in add_matches_for_unit (#1331667)
+- logind: introduce LockedHint and SetLockedHint (#3238) (#1335499)
+- import: use the old curl api (#1284974)
+- importd: drop dkr support (#1284974)
+- import: add support for gpg2 for verifying imported images (#1284974)
+
+* Thu Mar 10 2016 Lukas Nykryn <lnykryn@redhat.com> - 219-20
+- run: synchronously wait until the scope unit we create is started (#1272368)
+- device: rework how we enter tentative state (#1283579)
+- core: Do not bind a mount unit to a device, if it was from mountinfo (#1283579)
+- logind: set RemoveIPC=no by default (#1284588)
+- sysv-generator: follow symlinks in /etc/rc.d/init.d (#1285492)
+- sysv-generator test: always log to console (#1279034)
+- man: RemoveIPC is set to no on rhel (#1284588)
+- Avoid /tmp being mounted as tmpfs without the user's will (#1298109)
+- test sysv-generator: Check for network-online.target. (#1279034)
+- arm/aarch64: detect-virt: check dmi (#1278165)
+- detect-virt: dmi: look for KVM (#1278165)
+- Revert "journald: turn ForwardToSyslog= off by default" (#1285642)
+- terminal-util: when resetting terminals, don't wait for carrier (#1266745)
+- basic/terminal-util: introduce SYSTEMD_COLORS environment variable (#1247963)
+- ask-password: don't abort when message is missing (#1261136)
+- sysv-generator: do not join dependencies on one line, split them (#1288600)
+- udev: fibre channel: fix NPIV support (#1266934)
+- ata_id: unreverse WWN identifier (#1273306)
+- Fixup WWN bytes for big-endian systems (#1273306)
+- sd-journal: introduce has_runtime_files and has_persistent_files (#1082179)
+- journalctl: improve error messages when the specified boot is not found (#1082179)
+- journalctl: show friendly info when using -b on runtime journal only (#1082179)
+- journalctl: make "journalctl /dev/sda" work (#947636)
+- journalctl: add match for the current boot when called with devpath (#947636)
+- man: clarify what happens when journalctl is called with devpath (#947636)
+- core: downgrade warning about duplicate device names (#1296249)
+- udev: downgrade a few warnings to debug messages (#1289461)
+- man: LEVEL in systemd-analyze set-log level is not optional (#1268336)
+- Revert "udev: fibre channel: fix NPIV support" (#1266934)
+- udev: path-id: fibre channel NPIV - use fc_vport's port_name (#1266934)
+- systemctl: is-active/failed should return 0 if at least one unit is in given state (#1254650)
+- rules: set SYSTEMD_READY=0 on DM_UDEV_DISABLE_OTHER_RULES_FLAG=1 only with ADD event (#1312011)
+- s390: add personality support (#1300344)
+- socket_address_listen - do not rely on errno (#1316452)
+
 * Mon Oct 12 2015 Lukas Nykryn <lnykryn@redhat.com> - 219-19
 - udev: make naming for virtio devices opt-in (#1269216)
 - tmpfiles.d: don't clean SAP sockets either (#1186044)
