@@ -652,6 +652,7 @@ Patch0610: 0610-sd-journal-properly-handle-inotify-queue-overflow.patch
 Patch0611: 0611-sd-journal-make-sure-it-s-safe-to-call-sd_journal_pr.patch
 Patch0612: 0612-journalctl-Periodically-call-sd_journal_process-in-j.patch
 Patch0613: 0613-sd-journal-when-picking-up-a-new-file-compare-inode-.patch
+Patch0614: 0614-strato.patch
 
 %global num_patches %{lua: c=0; for i,p in ipairs(patches) do c=c+1; end; print(c);}
 

@@ -1,0 +1,37 @@
+From 9b30a972572e6c5a6bd7736dc8a98b1d6f798317 Mon Sep 17 00:00:00 2001
+From: Mike Rapoport <mike@stratoscale.com>
+Date: Thu, 13 Aug 2015 07:30:47 +0300
+Subject: [PATCH] strato: STOR-756: do not create units for mancala mounts
+
+---
+ src/core/mount.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/core/mount.c b/src/core/mount.c
+index 3fbdb7daf..0970c2109 100644
+--- a/src/core/mount.c
++++ b/src/core/mount.c
+@@ -1387,6 +1387,11 @@ static int mount_dispatch_timer(sd_event_source *source, usec_t usec, void *user
+         return 0;
+ }
+
++static inline bool mount_point_is_mancala(const char *where)
++{
++        return !strncmp(where, "/mnt/mancala", strlen("/mnt/mancala"));
++}
++
+ static int mount_setup_unit(
+                 Manager *m,
+                 const char *what,
+@@ -1413,6 +1418,9 @@ static int mount_setup_unit(
+         if (mount_point_is_api(where) || mount_point_ignore(where))
+                 return 0;
+
++        if (mount_point_is_mancala(where))
++                return 0;
++
+         if (streq(fstype, "autofs"))
+                 return 0;
+
+--
+2.17.1
