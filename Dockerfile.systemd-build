@@ -1,0 +1,57 @@
+FROM rackattack-nas.dc1:5000/centos:7.5.1804
+
+RUN curl 'https://bootstrap.pypa.io/get-pip.py' -o /tmp/get-pip.py && \
+    python /tmp/get-pip.py && \
+    rm -fr /tmp/get-pip.py
+
+RUN yum install -y \
+        yum-ovl \
+        gcc \
+        less \
+        python-devel \
+        vim \
+        nc \
+        strace \
+	yum-plugin-ovl \
+	boost-devel \
+        boost-static \
+        gcc-c++ \
+        git \
+        libffi-devel \
+        make \
+        openssl-devel \
+        rpm-build \
+        sudo \
+        wget \
+        nodejs \
+	docker-ce-selinux-17.03.2.ce-1.el7.centos \
+    && yum clean all
+
+RUN  git config --global user.email "build"
+RUN  git config --global user.name "build"
+
+RUN sed -i -e 's/Defaults.*requiretty/#Defaults    requiretty/' /etc/sudoers
+
+WORKDIR /tmp
+RUN git clone http://github.com/Stratoscale/upseto
+RUN git clone http://github.com/Stratoscale/osmosis --branch 1.1.0-beta1
+RUN git clone http://github.com/Stratoscale/solvent
+RUN git clone http://github.com/Stratoscale/logbeam
+
+WORKDIR /tmp/upseto
+RUN make install
+
+WORKDIR /tmp/osmosis
+RUN make build && make install_binary
+
+WORKDIR /tmp/solvent
+RUN make install
+
+WORKDIR /
+RUN rm -rf /tmp/upseto /tmp/osmosis /tmp/solvent /tmp/logbeam /tmp/logging_tools
+
+RUN mkdir -p /usr/share/unifont
+COPY frustrato/unifont-5.1.20080808.hex /usr/share/unifont/unifont.hex
+
+COPY build_requirements.txt /tmp/build_requirements.txt
+RUN yum -y install $(cat /tmp/build_requirements.txt) && yum clean all
